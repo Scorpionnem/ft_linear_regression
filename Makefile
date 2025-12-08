@@ -18,10 +18,6 @@ TRAIN_DEPS = $(TRAIN_SRCS:%.cpp=$(OBJDIR)/%.d)
 
 all: $(PREDICT_NAME) $(TRAIN_NAME)
 
-matplot:
-	git clone https://github.com/alandefreitas/matplotplusplus/ external/matplotplusplus
-	cd external/matplotplusplus ; cmake -B build ; cmake --build build
-
 re: fclean all
 
 $(PREDICT_NAME): $(PREDICT_OBJS)
