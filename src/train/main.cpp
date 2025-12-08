@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 13:08:53 by mbatty            #+#    #+#             */
-/*   Updated: 2025/12/08 15:51:28 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/12/08 15:56:41 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <fstream>
 #include <vector>
 #include "estimatePrice.hpp"
+#include "color.hpp"
 
 std::pair<double, double>	parseLine(const std::string &line)
 {
@@ -71,7 +72,6 @@ double	normalizeDataset(std::vector<std::pair<double, double>> &data)
 
 int	main(int ac, char **av)
 {
-	(void)ac;(void)av;
 	if (ac != 2)
 	{
 		std::cerr << "Usage: ./Train *.csv" << std::endl;
@@ -80,13 +80,13 @@ int	main(int ac, char **av)
 	std::ifstream	file(av[1]);
 	if (!file.is_open())
 	{
-		std::cerr << "Error: Could not open file" << std::endl;
+		std::cerr << COLOR_RED "Error: Could not open file" COLOR_RESET << std::endl;
 		return (1);
 	}
 
 	std::vector<std::pair<double, double>>	data;
-	std::string	line;
-	int	lineNumber = 0;
+	std::string								line;
+	int										lineNumber = 0;
 
 	while (getline(file, line))
 	{
@@ -97,22 +97,22 @@ int	main(int ac, char **av)
 			data.push_back(pair);
 		} catch (const std::exception &e)
 		{
-			std::cerr << "Error at line " << lineNumber << " : " << line << " (" << e.what() << ")" << std::endl;
+			std::cerr << COLOR_GRAY "Error at line " << lineNumber << " : " << line << " (" << e.what() << ")" COLOR_RESET << std::endl;
 			continue ;
 		}
 	}
 
-	double maxMileage = normalizeDataset(data);
+	double	maxMileage = normalizeDataset(data);
 
-	double theta0 = 0.0;
-	double theta1 = 0.0;
-	double learningRate = 0.01;
-	int iterations = 100000;
+	double	theta0 = 0.0;
+	double	theta1 = 0.0;
+	double	learningRate = 0.01;
+	int		iterations = 100000;
 
 	for (int i = 0; i < iterations; i++)
 		gradientStep(data, learningRate, theta0, theta1);
 
-	std::cout << "theta0: " << theta0 << " theta1: " << theta1 / maxMileage << std::endl;
+	std::cout << COLOR_GREEN "theta0: " << theta0 << " theta1: " << theta1 / maxMileage << COLOR_RESET << std::endl;
 
 	return (0);
 }
