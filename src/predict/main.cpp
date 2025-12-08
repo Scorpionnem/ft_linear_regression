@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 13:07:40 by mbatty            #+#    #+#             */
-/*   Updated: 2025/12/08 15:56:47 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/12/08 16:33:28 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@
 
 int	main(int ac, char **av)
 {
-	if (ac != 3)
-	{
-		std::cerr << "Usage: ./Predict theta0 theta1" << std::endl;
-		return (1);
-	}
+	double	theta0 = 0.0;
+	double	theta1 = 0.0;
 
-	double	theta0;
-	double	theta1;
-	try {
-		theta0 = std::stod(av[1]);
-		theta1 = std::stod(av[2]);
-	} catch (const std::exception &e) {
-		std::cerr << COLOR_RED "Error failed to parse thetas: " << e.what() << COLOR_RESET << std::endl;
-		return (1);
+	if (ac != 3)
+		std::cerr << "Usage: ./Predict theta0 theta1 (They will be set to 0)" << std::endl;
+	else
+	{
+		try {
+			theta0 = std::stod(av[1]);
+			theta1 = std::stod(av[2]);
+		} catch (const std::exception &e) {
+			std::cerr << COLOR_RED "Error failed to parse thetas: " << e.what() << COLOR_RESET << std::endl;
+			return (1);
+		}
 	}
 
 	std::string	str;
